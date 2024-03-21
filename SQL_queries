@@ -1,0 +1,45 @@
+ def get_companies_and_vacancies_count():
+        """
+        Метод для получения списка всех компаний и количество вакансий у каждой компании
+        """
+        select distinct company_name, count(vacancy_name) vacancy_count
+        from vacancy_db
+        group by company_name
+ 		pass
+     
+    def get_all_vacancies():
+        """
+        Метод для получения списка всех вакансий с указанием названия компании, названия вакансии и зарплаты и ссылки на вакансию
+        """
+        select vacancy(?), company_name, vacancy_name, salary, url
+        from vacancy_db
+    	pass
+
+    def get_avg_salary():
+        """
+        Метод для получения средней зарплаты по вакансиям
+		"""
+    	select vacancy_name, avg(salary) as avg_salary
+    	from vacancy_db
+    	group by vacancy
+        pass
+
+    def get_vacancies_with_higher_salary():
+        """
+        Метод для получения списка всех вакансий, у которых зарплата выше средней по всем вакансиям
+        """
+    	select vacancy_name, avg(salary) avg_salary
+        from vacancy_db 
+		where salary > (select avg(salary) as avg_salary from vacancy_db)
+		group by vacancy_name
+		order by avg_salary asc 
+    	pass
+
+    def get_vacancies_with_keyword():
+        """
+        Метод для получения списка всех вакансий, в названии которых содержатся переданные в метод слова, например python
+		"""
+    	select vacancy_name
+        from vacancy_db 
+		where vacancy_name like '%python%' (f'%{input}%')
+		pass
